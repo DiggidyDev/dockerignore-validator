@@ -1,6 +1,8 @@
 **The bug being fixed**
 Mention a link to the bug report here.
 
+___
+
 **Additions (if applicable)**
 - Added `foo.ts`
   - This file is important!  Does XYZ...
@@ -14,6 +16,8 @@ Mention a link to the bug report here.
 - Removed `baz.ts`
   - Wasn't being used anywhere
 
+___
+
 **Checklist**
 - [ ] Added tests for new functionality
   - [ ] These tests pass locally
@@ -22,7 +26,9 @@ Mention a link to the bug report here.
   - [ ] README
   - [ ] Wiki
   - [ ] Code comments
-     
+
+___
+
 **Screenshots**
 If applicable, any styling changes or before/after screenshots.
 
