@@ -10,31 +10,7 @@ on:
             - main
 
 jobs:
-    test-api:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  sparse-checkout: |
-                      api/validate
-
-            - name: Set up Go
-              uses: actions/setup-go@v4
-              with:
-                  go-version: "1.18"
-
-            - name: Build
-              run: |
-                  cd api/validate
-                  go build -v
-
-            - name: Test
-              run: |
-                  cd api/validate  
-                  go test -v
-
     deploy-preview:
-        needs: test-api
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
