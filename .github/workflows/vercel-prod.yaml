@@ -29,7 +29,9 @@ jobs:
                   go build -v
 
             - name: Test
-              run: go test -v
+              run: |
+                  cd api/validate
+                  go test -v
 
     deploy-prod:
         needs: test-api
