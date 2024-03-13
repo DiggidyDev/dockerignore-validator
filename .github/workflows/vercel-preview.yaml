@@ -37,7 +37,7 @@ jobs:
         needs: test-api
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v2
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
 
@@ -48,6 +48,4 @@ jobs:
               run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
             - name: Deploy Project Artifacts to Vercel
-              run: |
-                  ls
-                  vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+              run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
