@@ -57,6 +57,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, string(json))
 }
 
+// ExtractKeysFromRequest extracts the 'dockerignore' and 'files' keys from
+// the request body and returns them as string arrays respectively;
+// Returns: dockerignoreStrings, filesStrings, error
 func ExtractKeysFromRequest(r *http.Request) ([]string, []string, error) {
 	var requestBody map[string]interface{}
 
