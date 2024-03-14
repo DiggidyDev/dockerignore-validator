@@ -8,12 +8,55 @@ import (
 	"net/http/httptest"
 )
 
-// TODO
-func TestIndex(t *testing.T) {
-    r, _ := http.NewRequest(http.MethodPost, "/api/validate", bytes.NewBuffer([]byte(`{"dockerignore": ["Dockerfile*"], "files": ["Dockerfile", "Dockerfile.dev"]}`)))
-    w := httptest.NewRecorder()
+// TODO: Add tests for response body (All TestIndex tests)
+func TestIndex_ShouldNotErrorForPOST(t *testing.T) {
+    req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBuffer([]byte(`{"dockerignore":["pattern1", "pattern2"],"files":["file1", "file2"]}`)))
+    
+    if err != nil {
+        t.Fatal(err)
+    }
 
-    Index(w, r)
+    rr := httptest.NewRecorder()
+    handler := http.HandlerFunc(Index)
+    
+    handler.ServeHTTP(rr, req)
+
+    if rr.Code != http.StatusOK {
+        t.Errorf("Handler returned wrong status code: got %v want %v", rr.Code, http.StatusOK)
+    }
+}
+
+
+func TestIndex_ShouldAllowOPTIONS(t *testing.T) {
+    req, err := http.NewRequest(http.MethodOptions, "/", nil)
+    handler := http.HandlerFunc(Index)
+
+    if err != nil {
+        t.Fatal(err)
+    }
+
+    rr := httptest.NewRecorder()
+    handler.ServeHTTP(rr, req)
+
+    if rr.Code != http.StatusOK {
+        t.Errorf("Handler returned wrong status code: got %v want %v", rr.Code, http.StatusOK)
+    }
+}
+
+func TestIndex_ShouldNotAllowGET(t *testing.T) {
+    req, err := http.NewRequest(http.MethodGet, "/", nil)
+    handler := http.HandlerFunc(Index)
+
+    if err != nil {
+        t.Fatal(err)
+    }
+
+    rr := httptest.NewRecorder()
+    handler.ServeHTTP(rr, req)
+
+    if rr.Code != http.StatusMethodNotAllowed {
+        t.Errorf("Handler returned wrong status code: got %v want %v", rr.Code, http.StatusMethodNotAllowed)
+    }
 }
 
 func TestExtractKeysFromRequest_ShouldNotError(t *testing.T) {
