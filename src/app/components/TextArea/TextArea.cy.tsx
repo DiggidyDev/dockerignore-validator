@@ -2,6 +2,7 @@ import { TextArea, TextAreaProps } from "./TextArea";
 
 const defaults: TextAreaProps = {
     label: "test",
+    testId: "test",
 };
 
 describe("<TextArea />", () => {
@@ -20,6 +21,12 @@ describe("<TextArea />", () => {
                 "for",
                 defaults.label.toLowerCase()
             );
+        });
+
+        it("should be referenced by testId", () => {
+            cy.mount(<TextArea {...defaults} />)
+                .get(`[data-cy=${defaults.testId}]`)
+                .should("exist");
         });
     });
 

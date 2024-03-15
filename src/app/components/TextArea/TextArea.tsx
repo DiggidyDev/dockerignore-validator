@@ -4,6 +4,7 @@ import { Label } from "../Label/Label";
 
 export interface TextAreaProps {
     label: string;
+    testId: string;
 
     disabled?: boolean;
     name?: string;
@@ -14,6 +15,7 @@ export interface TextAreaProps {
 
 export function TextArea({
     label,
+    testId,
     disabled = false,
     name,
     required = false,
@@ -23,7 +25,7 @@ export function TextArea({
     name = name ?? label.toLowerCase();
 
     return (
-        <div className="flex w-full flex-col text-center">
+        <div data-cy={testId} className="flex w-full flex-col text-center">
             <Label text={label} htmlFor={name} />
             <StyledTextArea
                 disabled={disabled}
@@ -44,7 +46,10 @@ interface LoadingProps {
 }
 
 TextArea.Loading = ({ label = "Loading..." }: LoadingProps) => (
-    <div className="flex w-full flex-col text-center">
+    <div
+        data-cy="textarea-loading"
+        className="flex w-full flex-col text-center"
+    >
         <Label htmlFor="loading" text={label} />
         <StyledTextArea
             className="duration-1000 animate-pulse disabled:bg-gray-300"

@@ -50,6 +50,7 @@ export default function Home() {
             <div className="flex flex-row gap-8 min-h-[70vh] min-w-full">
                 <TextArea
                     label=".dockerignore"
+                    testId="dockerignore-input"
                     name="dockerignore"
                     setValue={setDockerignore}
                     value={dockerignore}
@@ -58,6 +59,7 @@ export default function Home() {
 
                 <TextArea
                     label="Files"
+                    testId="files-input"
                     setValue={setFiles}
                     value={files}
                     required
@@ -67,6 +69,7 @@ export default function Home() {
                     <TextArea.Loading label="Matching patterns..." />
                 ) : (
                     <TextArea
+                        testId="result-output"
                         label={showExcluded ? "Ignored Files" : "Files to Copy"}
                         disabled
                         value={processFiles(files, result, showExcluded)}
