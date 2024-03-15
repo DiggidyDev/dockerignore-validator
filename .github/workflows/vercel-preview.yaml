@@ -84,7 +84,7 @@ jobs:
           go test -v
 
   deploy-preview:
-    needs: test-api
+    needs: [test-api, test-components]
     outputs:
       preview-url: ${{ steps.set-preview-url.outputs.preview-url }}
     runs-on: ubuntu-latest
