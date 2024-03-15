@@ -86,4 +86,4 @@ jobs:
       - name: Set up Cypress environment
         uses: cypress-io/github-action@v6
         with:
-          env: CYPRESS_BASE_URL=${{ vars.PREVIEW_URL }}
+          config: baseUrl=${{ vars.PREVIEW_URL }}
