@@ -11,6 +11,23 @@ on:
       - main
 
 jobs:
+  install-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
   test-api:
     runs-on: ubuntu-latest
     steps:
@@ -47,3 +64,26 @@ jobs:
 
       - name: Deploy directly to Vercel
         run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+
+  test-preview:
+    needs: deploy-preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Link dependencies
+        run: npm install
+
+      - name: Set up Cypress environment
+        uses: cypress-io/github-action@v6
+        with:
+          env: CYPRESS_BASE_URL=${{ vars.PREVIEW_URL }}
