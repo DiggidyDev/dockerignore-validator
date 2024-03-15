@@ -6,7 +6,10 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "test": "cypress open",
+        "test:e2e": "cypress run",
+        "test:cmp": "cypress run --component --spec src/app/components/**/*.cy.tsx"
     },
     "dependencies": {
         "next": "14.1.3",
