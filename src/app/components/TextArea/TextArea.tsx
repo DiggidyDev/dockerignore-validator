@@ -45,10 +45,11 @@ interface LoadingProps {
 
 TextArea.Loading = ({ label = "Loading..." }: LoadingProps) => (
     <div className="flex w-full flex-col text-center">
-        <Label text={label} />
+        <Label htmlFor="loading" text={label} />
         <StyledTextArea
             additionalClasses="duration-1000 animate-pulse disabled:bg-gray-300"
             disabled
+            name="loading"
         />
     </div>
 );
