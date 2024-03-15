@@ -11,10 +11,12 @@ describe("<TextArea />", () => {
     });
 
     context("visuals", () => {
+        beforeEach(() => {
+            cy.mount(<TextArea {...defaults} />);
+        });
+
         it("displays the correct label", () => {
-            cy.mount(<TextArea {...defaults} />)
-                .get("label")
-                .should("have.text", defaults.label);
+            cy.get("label").should("have.text", defaults.label);
 
             cy.get("label").should(
                 "have.attr",
@@ -24,9 +26,7 @@ describe("<TextArea />", () => {
         });
 
         it("should be referenced by testId", () => {
-            cy.mount(<TextArea {...defaults} />)
-                .get(`[data-cy=${defaults.testId}]`)
-                .should("exist");
+            cy.get(`[data-cy=${defaults.testId}]`).should("exist");
         });
     });
 

@@ -7,14 +7,14 @@ import { Label } from "./components/Label/Label";
 const processFiles = (
     files: string,
     result: boolean[],
-    showExcluded: boolean
+    showIgnored: boolean
 ) => {
     const filepaths = files.split("\n");
 
-    const isExcluded = (fp: string, i: number) =>
-        showExcluded ? result[i] : !result[i];
+    const isIgnored = (fp: string, i: number) =>
+        showIgnored ? result[i] : !result[i];
 
-    return filepaths.filter(isExcluded).join("\n");
+    return filepaths.filter(isIgnored).join("\n");
 };
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
     const [files, setFiles] = useState("");
 
     const [result, setResult] = useState<boolean[]>([]);
-    const [showExcluded, setShowExcluded] = useState(true);
+    const [showIgnored, setShowIgnored] = useState(true);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -70,25 +70,28 @@ export default function Home() {
                 ) : (
                     <TextArea
                         testId="result-output"
-                        label={showExcluded ? "Ignored Files" : "Files to Copy"}
+                        label={showIgnored ? "Ignored Files" : "Files to Copy"}
                         disabled
-                        value={processFiles(files, result, showExcluded)}
+                        value={processFiles(files, result, showIgnored)}
                     />
                 )}
                 <div
                     data-cy="options-container"
                     className="flex flex-row-reverse items-center gap-2"
                 >
-                    <div className="flex flex-row-reverse items-center gap-2">
+                    <div
+                        data-cy="options"
+                        className="flex flex-row-reverse items-center gap-2"
+                    >
                         <Label
-                            text="Show excluded files?"
-                            htmlFor="showExcluded"
+                            text="Show ignored files?"
+                            htmlFor="showIgnored"
                             className="text-sm flex min-w-fit text-nowrap !mb-0"
                         />
                         <input
-                            checked={showExcluded}
-                            name="showExcluded"
-                            onChange={() => setShowExcluded(!showExcluded)}
+                            checked={showIgnored}
+                            name="showIgnored"
+                            onChange={() => setShowIgnored(!showIgnored)}
                             type="checkbox"
                         />
                     </div>
@@ -96,6 +99,7 @@ export default function Home() {
             </div>
 
             <button
+                data-cy="validate-button"
                 className="bg-blue-500 text-white p-4 rounded-md disabled:cursor-not-allowed enabled:hover:bg-blue-600 transition-colors"
                 disabled={isLoading}
                 type="submit"
