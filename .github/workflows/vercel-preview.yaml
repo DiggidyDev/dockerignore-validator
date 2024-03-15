@@ -76,7 +76,7 @@ jobs:
 
       - name: Set Preview URL
         id: set-preview-url
-        run: cat preview-url.txt >> "$GITHUB_OUTPUT"
+        run: echo "preview-url=$(cat preview-url.txt)" >> "$GITHUB_OUTPUT"
 
   test-preview:
     needs: [deploy-preview, install-deps]
