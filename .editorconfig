@@ -11,5 +11,5 @@ charset = utf-8
 trim_trailing_whitespace = false
 insert_final_newline = false
 
-[*.yaml]
+[*.{yaml,css,config.ts}]
 indent_size = 2

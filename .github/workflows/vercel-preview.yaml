@@ -11,6 +11,55 @@ on:
       - main
 
 jobs:
+  install-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        name: Install dependencies
+        run: npm ci
+
+      - if: steps.cache.outputs.cache-hit == 'true'
+        name: Link cached dependencies
+        run: npm install
+
+  test-components:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Link cached dependencies
+        run: npm install
+
+      - name: Run component tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          component: true
+
   test-api:
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +69,7 @@ jobs:
             api/validate
 
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: "1.18"
 
@@ -35,7 +84,9 @@ jobs:
           go test -v
 
   deploy-preview:
-    needs: test-api
+    needs: [test-api, test-components]
+    outputs:
+      preview-url: ${{ steps.set-preview-url.outputs.preview-url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,4 +97,33 @@ jobs:
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy directly to Vercel
-        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }} > preview-url.txt
+
+      - name: Set Preview URL
+        id: set-preview-url
+        run: echo "preview-url=$(cat preview-url.txt)" >> "$GITHUB_OUTPUT"
+
+  test-preview:
+    needs: [deploy-preview, install-deps]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Link cached dependencies
+        run: npm install
+
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          config: baseUrl=${{ needs.deploy-preview.outputs.preview-url }}
+          install: false
