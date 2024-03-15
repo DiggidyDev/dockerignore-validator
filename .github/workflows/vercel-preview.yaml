@@ -24,9 +24,8 @@ jobs:
           path: |
             node_modules
             ~/.npm
+            ~/.cache/Cypress
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          # Still saves the cache, but doesn't download a cache if found
-          lookup-only: true
 
       - if: steps.cache.outputs.cache-hit != 'true'
         name: Install dependencies
@@ -86,6 +85,7 @@ jobs:
           path: |
             node_modules
             ~/.npm
+            ~/.cache/Cypress
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Link cached dependencies
