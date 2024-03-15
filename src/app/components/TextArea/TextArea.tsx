@@ -2,7 +2,7 @@ import type { ChangeEvent, HTMLProps } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { Label } from "../Label/Label";
 
-interface TextAreaProps {
+export interface TextAreaProps {
     label: string;
 
     disabled?: boolean;

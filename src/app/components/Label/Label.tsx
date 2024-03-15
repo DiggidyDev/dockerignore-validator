@@ -1,4 +1,4 @@
-interface LabelProps {
+export interface LabelProps {
     htmlFor: string;
     text: string;
 
