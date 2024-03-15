@@ -80,7 +80,7 @@ export default function Home() {
                         <Label
                             text="Show excluded files?"
                             htmlFor="showExcluded"
-                            className="text-sm flex min-w-fit text-nowrap mb-0"
+                            className="text-sm flex min-w-fit text-nowrap !mb-0"
                         />
                         <input
                             checked={showExcluded}
