@@ -47,7 +47,7 @@ TextArea.Loading = ({ label = "Loading..." }: LoadingProps) => (
     <div className="flex w-full flex-col text-center">
         <Label htmlFor="loading" text={label} />
         <StyledTextArea
-            additionalClasses="duration-1000 animate-pulse disabled:bg-gray-300"
+            className="duration-1000 animate-pulse disabled:bg-gray-300"
             disabled
             name="loading"
         />
@@ -55,14 +55,14 @@ TextArea.Loading = ({ label = "Loading..." }: LoadingProps) => (
 );
 
 interface StyledTextAreaProps extends HTMLProps<HTMLTextAreaElement> {
-    additionalClasses?: string;
+    className?: string;
 }
 
-function StyledTextArea({ additionalClasses, ...props }: StyledTextAreaProps) {
+function StyledTextArea({ className = "", ...props }: StyledTextAreaProps) {
     return (
         <textarea
             {...props}
-            className={`w-full h-full p-2 disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed dark:bg-slate-700 rounded-md drop-shadow-lg dark:shadow-2xl resize-none ${additionalClasses}`}
+            className={`w-full h-full p-2 disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed dark:bg-slate-700 rounded-md drop-shadow-lg dark:shadow-2xl resize-none ${className}`}
         />
     );
 }

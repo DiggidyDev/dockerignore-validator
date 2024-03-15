@@ -5,7 +5,7 @@ interface LabelProps {
     className?: string;
 }
 
-export function Label({ className, text, htmlFor }: LabelProps) {
+export function Label({ className = "", text, htmlFor }: LabelProps) {
     return (
         <label
             htmlFor={htmlFor}
