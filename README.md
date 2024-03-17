@@ -101,7 +101,6 @@ It's important to note that each **Response example** is what would be returned 
 
 -   **Description**: Validates filepaths against a .dockerignore configuration.
 -   **Method**: `POST`
--   **URL**: `/endpoint-url`
 -   **Parameters**: N/A
 -   **Request Body**:
     ```json
