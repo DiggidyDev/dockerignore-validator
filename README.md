@@ -1,7 +1,16 @@
+[![Vercel Production Deployment Actions Status](https://github.com/DiggidyDev/dockerignore-validator/actions/workflows/vercel-prod.yaml/badge.svg)](https://github.com/DiggidyDev/dockerignore-validator/actions/workflows/vercel-prod.yaml)
+[![GPL-2.0 License](https://img.shields.io/badge/License-GPL_2.0-EEFEFE.svg)](https://github.com/DiggidyDev/dockerignore-validator/blob/main/LICENSE)
+
+[![Vercel Preview Deployment Actions Status](https://github.com/DiggidyDev/dockerignore-validator/actions/workflows/vercel-preview.yaml/badge.svg)](https://github.com/DiggidyDev/dockerignore-validator/actions/workflows/vercel-preview.yaml)
+[![Cypress.io](https://img.shields.io/badge/Tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
+
+
+
+
 # Table of Contents
 
 -   [About](#about)
-    -   [Feature list](#feature-list)
+    -   [Features](#features)
 -   [Local Development](#local-development)
     -   [Testing](#testing)
     -   [Adding new tests](#adding-new-tests)
