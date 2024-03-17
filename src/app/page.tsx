@@ -45,67 +45,70 @@ export default function Home() {
     return (
         <form
             onSubmit={onSubmit}
-            className="flex flex-col gap-8 items-center justify-center p-8 rounded-lg min-w-full"
+            className="flex gap-8 items-center justify-center p-8 rounded-lg min-w-full"
         >
-            <div className="flex flex-row gap-8 min-h-[70vh] min-w-full">
-                <TextArea
-                    label=".dockerignore"
-                    testId="dockerignore-input"
-                    name="dockerignore"
-                    setValue={setDockerignore}
-                    value={dockerignore}
-                    required
-                />
-
-                <TextArea
-                    label="Files"
-                    testId="files-input"
-                    setValue={setFiles}
-                    value={files}
-                    required
-                />
-
-                {isLoading ? (
-                    <TextArea.Loading label="Matching patterns..." />
-                ) : (
+            <div className="flex flex-col items-center gap-8 w-full">
+                <div className="flex flex-row gap-8 min-h-[70vh] w-full">
                     <TextArea
-                        testId="result-output"
-                        label={showIgnored ? "Ignored Files" : "Files to Copy"}
-                        disabled
-                        value={processFiles(files, result, showIgnored)}
+                        label=".dockerignore"
+                        testId="dockerignore-input"
+                        name="dockerignore"
+                        setValue={setDockerignore}
+                        value={dockerignore}
+                        required
                     />
-                )}
+
+                    <TextArea
+                        label="Files"
+                        testId="files-input"
+                        setValue={setFiles}
+                        value={files}
+                        required
+                    />
+
+                    {isLoading ? (
+                        <TextArea.Loading label="Matching patterns..." />
+                    ) : (
+                        <TextArea
+                            testId="result-output"
+                            label={
+                                showIgnored ? "Ignored Files" : "Files to Copy"
+                            }
+                            disabled
+                            value={processFiles(files, result, showIgnored)}
+                        />
+                    )}
+                </div>
+                <button
+                    data-cy="validate-button"
+                    className="bg-blue-500 text-white p-4 rounded-md disabled:cursor-not-allowed enabled:hover:bg-blue-600 transition-colors"
+                    disabled={isLoading}
+                    type="submit"
+                >
+                    Validate
+                </button>
+            </div>
+            <div
+                data-cy="options-container"
+                className="flex flex-row-reverse items-center gap-2"
+            >
                 <div
-                    data-cy="options-container"
+                    data-cy="options"
                     className="flex flex-row-reverse items-center gap-2"
                 >
-                    <div
-                        data-cy="options"
-                        className="flex flex-row-reverse items-center gap-2"
-                    >
-                        <Label
-                            text="Show ignored files?"
-                            htmlFor="showIgnored"
-                            className="text-sm flex min-w-fit text-nowrap !mb-0"
-                        />
-                        <input
-                            checked={showIgnored}
-                            name="showIgnored"
-                            onChange={() => setShowIgnored(!showIgnored)}
-                            type="checkbox"
-                        />
-                    </div>
+                    <Label
+                        text="Show ignored files?"
+                        htmlFor="showIgnored"
+                        className="text-sm flex min-w-fit text-nowrap !mb-0"
+                    />
+                    <input
+                        checked={showIgnored}
+                        name="showIgnored"
+                        onChange={() => setShowIgnored(!showIgnored)}
+                        type="checkbox"
+                    />
                 </div>
             </div>
-
-            <button
-                data-cy="validate-button"
-                className="bg-blue-500 text-white p-4 rounded-md disabled:cursor-not-allowed enabled:hover:bg-blue-600 transition-colors"
-                disabled={isLoading}
-                type="submit"
-            >
-                Validate
-            </button>
         </form>
     );
 }
