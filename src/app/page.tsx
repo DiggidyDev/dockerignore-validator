@@ -86,6 +86,32 @@ export default function Home() {
                             value={processFiles(files, result, showIgnored)}
                         />
                     )}
+                    {showOptions && (
+                        <div
+                            data-cy="options-container"
+                            className="flex flex-col items-center gap-2"
+                        >
+                            <h2 className="font-bold text-2xl">Options</h2>
+                            <div
+                                data-cy="options"
+                                className="flex h-full flex-row-reverse items-center gap-2"
+                            >
+                                <Label
+                                    text="Show ignored files?"
+                                    htmlFor="showIgnored"
+                                    className="text-sm flex min-w-fit text-nowrap !mb-0"
+                                />
+                                <input
+                                    checked={showIgnored}
+                                    name="showIgnored"
+                                    onChange={() =>
+                                        setShowIgnored(!showIgnored)
+                                    }
+                                    type="checkbox"
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className="flex gap-8 w-fill items-center">
                     <div className="bg-slate-700 rounded-lg">
@@ -122,30 +148,6 @@ export default function Home() {
                     </Button>
                 </div>
             </div>
-            {showOptions && (
-                <div
-                    data-cy="options-container"
-                    className="flex h-[80vh] flex-col items-center gap-2"
-                >
-                    <h2 className="font-bold text-2xl">Options</h2>
-                    <div
-                        data-cy="options"
-                        className="flex h-full flex-row-reverse items-center gap-2"
-                    >
-                        <Label
-                            text="Show ignored files?"
-                            htmlFor="showIgnored"
-                            className="text-sm flex min-w-fit text-nowrap !mb-0"
-                        />
-                        <input
-                            checked={showIgnored}
-                            name="showIgnored"
-                            onChange={() => setShowIgnored(!showIgnored)}
-                            type="checkbox"
-                        />
-                    </div>
-                </div>
-            )}
         </form>
     );
 }
