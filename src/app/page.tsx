@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { TextArea } from "./components/TextArea/TextArea";
+import { Button } from "./components/Button/Button";
 import { Label } from "./components/Label/Label";
+import { TextArea } from "./components/TextArea/TextArea";
 
 const processFiles = (
     files: string,
@@ -18,13 +19,20 @@ const processFiles = (
 };
 
 export default function Home() {
+    // MAIN STATE
     const [dockerignore, setDockerignore] = useState("");
     const [files, setFiles] = useState("");
-
     const [result, setResult] = useState<boolean[]>([]);
-    const [showIgnored, setShowIgnored] = useState(true);
 
+    // CONTROL STATE
+    const [repoUrl, setRepoUrl] = useState(
+        process.env.NEXT_PUBLIC_SAMPLE_GITHUB_REPO!
+    );
+    const [showOptions, setShowOptions] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    // OPTIONS
+    const [showIgnored, setShowIgnored] = useState(true);
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -79,36 +87,65 @@ export default function Home() {
                         />
                     )}
                 </div>
-                <button
-                    data-cy="validate-button"
-                    className="bg-blue-500 text-white p-4 rounded-md disabled:cursor-not-allowed enabled:hover:bg-blue-600 transition-colors"
-                    disabled={isLoading}
-                    type="submit"
-                >
-                    Validate
-                </button>
-            </div>
-            <div
-                data-cy="options-container"
-                className="flex flex-row-reverse items-center gap-2"
-            >
-                <div
-                    data-cy="options"
-                    className="flex flex-row-reverse items-center gap-2"
-                >
-                    <Label
-                        text="Show ignored files?"
-                        htmlFor="showIgnored"
-                        className="text-sm flex min-w-fit text-nowrap !mb-0"
-                    />
-                    <input
-                        checked={showIgnored}
-                        name="showIgnored"
-                        onChange={() => setShowIgnored(!showIgnored)}
-                        type="checkbox"
-                    />
+                <div className="flex gap-8 w-fill items-center">
+                    <div className="bg-slate-700 rounded-lg">
+                        <input
+                            className="w-fill w-[20vw] p-4 bg-transparent"
+                            onChange={(e) => setRepoUrl(e.target.value)}
+                            type="url"
+                            value={process.env.NEXT_PUBLIC_SAMPLE_GITHUB_REPO}
+                        />
+                        <Button
+                            className="!bg-[#333] !p-3 mr-1 enabled:hover:!bg-[#2b2b2b]"
+                            data-cy="import-button"
+                            disabled={isLoading}
+                            onClick={() => {}}
+                            type="button"
+                        >
+                            Import from GitHub
+                        </Button>
+                    </div>
+                    <Button
+                        data-cy="toggle-options"
+                        className="bg-yellow-500 enabled:hover:bg-yellow-600"
+                        onClick={() => setShowOptions(!showOptions)}
+                        type="button"
+                    >
+                        {showOptions ? "Hide" : "Show"} Options
+                    </Button>
+                    <Button
+                        data-cy="validate-button"
+                        disabled={isLoading}
+                        type="submit"
+                    >
+                        Validate
+                    </Button>
                 </div>
             </div>
+            {showOptions && (
+                <div
+                    data-cy="options-container"
+                    className="flex h-[80vh] flex-col items-center gap-2"
+                >
+                    <h2 className="font-bold text-2xl">Options</h2>
+                    <div
+                        data-cy="options"
+                        className="flex h-full flex-row-reverse items-center gap-2"
+                    >
+                        <Label
+                            text="Show ignored files?"
+                            htmlFor="showIgnored"
+                            className="text-sm flex min-w-fit text-nowrap !mb-0"
+                        />
+                        <input
+                            checked={showIgnored}
+                            name="showIgnored"
+                            onChange={() => setShowIgnored(!showIgnored)}
+                            type="checkbox"
+                        />
+                    </div>
+                </div>
+            )}
         </form>
     );
 }

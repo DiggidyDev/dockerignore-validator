@@ -67,7 +67,7 @@ function StyledTextArea({ className = "", ...props }: StyledTextAreaProps) {
     return (
         <textarea
             {...props}
-            className={`w-full h-full p-2 disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed dark:bg-slate-700 rounded-md drop-shadow-lg dark:shadow-2xl resize-none ${className}`}
+            className={`w-full h-full break-normal p-2 disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed dark:bg-slate-700 rounded-md drop-shadow-lg dark:shadow-2xl resize-none ${className}`}
         />
     );
 }
