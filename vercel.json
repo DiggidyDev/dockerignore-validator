@@ -1,4 +1,9 @@
 {
+    "functions": {
+        "api/files/index.ts": {
+            "includeFiles": "@/app/utils/*"
+        }
+    },
     "github": {
         "deploymentEnabled": false
     }

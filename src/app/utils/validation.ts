@@ -1,3 +1,5 @@
+import type { RepositoryDetails } from "./interfaces";
+
 /**
  * A utility function for extracting sections of a GitHub repository URL.
  * @param url The GitHub repo URL to extract details from
