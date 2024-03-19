@@ -40,7 +40,10 @@ export default function Home() {
 
         const res = await fetch(`/api/files?url=${repoUrl}`);
 
-        setFiles((await res.json()).files.join("\n"));
+        const { dockerignore, files } = await res.json();
+
+        setFiles(files.join("\n"));
+        setDockerignore(dockerignore.join("\n"));
         setIsFetchingRepo(false);
     };
 
