@@ -30,9 +30,19 @@ export default function Home() {
     );
     const [showOptions, setShowOptions] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isFetchingRepo, setIsFetchingRepo] = useState(false);
 
     // OPTIONS
     const [showIgnored, setShowIgnored] = useState(true);
+
+    const fetchRepo = async () => {
+        setIsFetchingRepo(true);
+
+        const res = await fetch(`/api/files?url=${repoUrl}`);
+
+        setFiles((await res.json()).files.join("\n"));
+        setIsFetchingRepo(false);
+    };
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -57,22 +67,29 @@ export default function Home() {
         >
             <div className="flex flex-col items-center gap-8 w-full">
                 <div className="flex flex-row gap-8 min-h-[70vh] w-full">
-                    <TextArea
-                        label=".dockerignore"
-                        testId="dockerignore-input"
-                        name="dockerignore"
-                        setValue={setDockerignore}
-                        value={dockerignore}
-                        required
-                    />
-
-                    <TextArea
-                        label="Files"
-                        testId="files-input"
-                        setValue={setFiles}
-                        value={files}
-                        required
-                    />
+                    {isFetchingRepo ? (
+                        <TextArea.Loading />
+                    ) : (
+                        <TextArea
+                            label=".dockerignore"
+                            testId="dockerignore-input"
+                            name="dockerignore"
+                            setValue={setDockerignore}
+                            value={dockerignore}
+                            required
+                        />
+                    )}
+                    {isFetchingRepo ? (
+                        <TextArea.Loading label="Fetching files..." />
+                    ) : (
+                        <TextArea
+                            label="Files"
+                            testId="files-input"
+                            setValue={setFiles}
+                            value={files}
+                            required
+                        />
+                    )}
 
                     {isLoading ? (
                         <TextArea.Loading label="Matching patterns..." />
@@ -119,13 +136,15 @@ export default function Home() {
                             className="w-fill w-[20vw] p-4 bg-transparent"
                             onChange={(e) => setRepoUrl(e.target.value)}
                             type="url"
-                            value={process.env.NEXT_PUBLIC_SAMPLE_GITHUB_REPO}
+                            value={repoUrl}
                         />
                         <Button
                             className="!bg-[#333] !p-3 mr-1 enabled:hover:!bg-[#2b2b2b]"
                             data-cy="import-button"
                             disabled={isLoading}
-                            onClick={() => {}}
+                            onClick={() => {
+                                fetchRepo();
+                            }}
                             type="button"
                         >
                             Import from GitHub
