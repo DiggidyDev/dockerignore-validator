@@ -152,7 +152,7 @@ export default function Home() {
                     </div>
                     <Button
                         data-cy="toggle-options"
-                        className="bg-yellow-500 enabled:hover:bg-yellow-600"
+                        className="bg-yellow-500 min-w-[9rem] enabled:hover:bg-yellow-600"
                         onClick={() => setShowOptions(!showOptions)}
                         type="button"
                     >
