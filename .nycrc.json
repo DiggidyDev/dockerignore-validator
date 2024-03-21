@@ -1,5 +1,5 @@
 {
-    "extends": ["@istanbuljs/nyc-config-typescript", "babel-plugin-istanbul"],
+    "extends": ["@istanbuljs/nyc-config-typescript"],
 
     "extension": [".ts"],
     "include": ["src/**/*.ts"],
