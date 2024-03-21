@@ -106,7 +106,7 @@ jobs:
           go test -v
 
   deploy-preview:
-    needs: [test-api, test-components]
+    needs: [test-api, test-components, unit-tests]
     outputs:
       preview-url: ${{ steps.set-preview-url.outputs.preview-url }}
     runs-on: ubuntu-latest
@@ -126,7 +126,7 @@ jobs:
         run: echo "preview-url=$(cat preview-url.txt)" >> "$GITHUB_OUTPUT"
 
   test-preview:
-    needs: [deploy-preview, install-deps]
+    needs: deploy-preview
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
