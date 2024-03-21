@@ -6,7 +6,7 @@
     "exclude": ["**/*.{d,spec}.ts"],
 
     "report-dir": "coverage",
-    "reporter": ["html", "text", "text-summary"],
+    "reporter": ["html", "lcov", "clover", "text", "text-summary"],
 
     "all": true,
     "check-coverage": true,

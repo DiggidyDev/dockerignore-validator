@@ -57,6 +57,19 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit:cov
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: DiggidyDev/dockerignore-validator
+          files: ./coverage/lcov.info,./coverage/clover.xml
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: coverage
+
   test-components:
     needs: install-deps
     runs-on: ubuntu-latest
