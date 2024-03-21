@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { request } from "@octokit/request";
 
 export const octoFetch = request.defaults({

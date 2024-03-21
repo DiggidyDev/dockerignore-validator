@@ -35,6 +35,28 @@ jobs:
         name: Link cached dependencies
         run: npm install
 
+  unit-tests:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Link cached dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test:unit:cov
+
   test-components:
     needs: install-deps
     runs-on: ubuntu-latest

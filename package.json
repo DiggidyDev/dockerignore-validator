@@ -10,7 +10,9 @@
         "lint": "next lint",
         "test": "cypress open",
         "test:e2e": "cypress run",
-        "test:cmp": "cypress run --component --spec src/app/components/**/*.cy.tsx"
+        "test:cmp": "cypress run --component --spec src/app/components/**/*.cy.tsx",
+        "test:unit": "mocha --require tsx src/**/*.spec.ts",
+        "test:unit:cov": "npm pkg set type=commonjs && nyc mocha --require tsx src/**/*.spec.ts && npm pkg set type=module"
     },
     "dependencies": {
         "@octokit/request": "^9.0.1",
@@ -19,16 +21,23 @@
         "react-dom": "^18"
     },
     "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
+        "@types/chai": "^4.3.14",
+        "@types/mocha": "^10.0.6",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "@vercel/node": "^3.0.24",
         "autoprefixer": "^10.0.1",
+        "chai": "^5.1.0",
         "cypress": "^13.7.0",
         "eslint": "^8",
         "eslint-config-next": "14.1.3",
+        "mocha": "^10.3.0",
+        "nyc": "^15.1.0",
         "postcss": "^8",
         "tailwindcss": "^3.3.0",
+        "tsx": "^4.7.1",
         "typescript": "^5"
     }
 }
