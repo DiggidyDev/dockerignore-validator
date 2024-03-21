@@ -30,13 +30,13 @@ export default function Home() {
     );
     const [showOptions, setShowOptions] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [isFetchingRepo, setIsFetchingRepo] = useState(false);
+    const [isFetchingFiles, setIsFetchingFiles] = useState(false);
 
     // OPTIONS
     const [showIgnored, setShowIgnored] = useState(true);
 
     const fetchRepo = async () => {
-        setIsFetchingRepo(true);
+        setIsFetchingFiles(true);
 
         const res = await fetch(`/api/files?url=${repoUrl}`);
 
@@ -44,7 +44,7 @@ export default function Home() {
 
         setFiles(files.join("\n"));
         setDockerignore(dockerignore.join("\n"));
-        setIsFetchingRepo(false);
+        setIsFetchingFiles(false);
     };
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,7 +70,7 @@ export default function Home() {
         >
             <div className="flex flex-col items-center gap-8 w-full">
                 <div className="flex flex-row gap-8 min-h-[70vh] w-full">
-                    {isFetchingRepo ? (
+                    {isFetchingFiles ? (
                         <TextArea.Loading />
                     ) : (
                         <TextArea
@@ -82,7 +82,7 @@ export default function Home() {
                             required
                         />
                     )}
-                    {isFetchingRepo ? (
+                    {isFetchingFiles ? (
                         <TextArea.Loading label="Fetching files..." />
                     ) : (
                         <TextArea
