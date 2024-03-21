@@ -7,7 +7,7 @@ import type { RepositoryDetails } from "./interfaces";
  */
 export function extractRepoDetails(url: string): RepositoryDetails | undefined {
     const regex =
-        /^(?:https?:\/\/(?:www\.)?)?github\.com\/([^/]+)\/([^/]+)\/(?:tree|blob|releases\/tag|commit)\/(.+)/;
+        /^(?:https?:\/\/)?(?:www\.)?github\.com\/([^/]+)\/([^/]+)\/(?:tree|releases\/tag|commit)\/(.+)/;
     const match = url.match(regex);
 
     if (match) {
