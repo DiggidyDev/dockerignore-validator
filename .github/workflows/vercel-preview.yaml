@@ -35,6 +35,41 @@ jobs:
         name: Link cached dependencies
         run: npm install
 
+  unit-tests:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Link cached dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test:unit:cov
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: DiggidyDev/dockerignore-validator
+          files: ./coverage/lcov.info,./coverage/clover.xml
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: coverage
+
   test-components:
     needs: install-deps
     runs-on: ubuntu-latest
@@ -84,7 +119,7 @@ jobs:
           go test -v
 
   deploy-preview:
-    needs: [test-api, test-components]
+    needs: [test-api, test-components, unit-tests]
     outputs:
       preview-url: ${{ steps.set-preview-url.outputs.preview-url }}
     runs-on: ubuntu-latest
@@ -104,7 +139,7 @@ jobs:
         run: echo "preview-url=$(cat preview-url.txt)" >> "$GITHUB_OUTPUT"
 
   test-preview:
-    needs: [deploy-preview, install-deps]
+    needs: deploy-preview
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

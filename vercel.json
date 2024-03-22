@@ -1,4 +1,10 @@
 {
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "functions": {
+        "api/files/index.ts": {
+            "includeFiles": "@/app/utils/*"
+        }
+    },
     "github": {
         "deploymentEnabled": false
     }
