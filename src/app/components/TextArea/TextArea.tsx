@@ -2,25 +2,19 @@ import type { ChangeEvent, HTMLProps } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { Label } from "../Label/Label";
 
-export interface TextAreaProps {
+export interface TextAreaProps extends HTMLProps<HTMLTextAreaElement> {
     label: string;
     testId: string;
 
-    disabled?: boolean;
-    name?: string;
-    required?: boolean;
     setValue?: Dispatch<SetStateAction<string>>;
-    value?: string;
 }
 
 export function TextArea({
     label,
     testId,
-    disabled = false,
     name,
-    required = false,
     setValue,
-    value,
+    ...props
 }: TextAreaProps) {
     name = name ?? label.toLowerCase();
 
@@ -28,24 +22,22 @@ export function TextArea({
         <div data-cy={testId} className="flex w-full flex-col text-center">
             <Label text={label} htmlFor={name} />
             <StyledTextArea
-                disabled={disabled}
                 name={name}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setValue?.(e.target.value)
                 }
-                required={required}
                 spellCheck={false}
-                value={value}
+                {...props}
             />
         </div>
     );
 }
 
-interface LoadingProps {
+interface LoadingProps extends HTMLProps<HTMLTextAreaElement> {
     label?: string;
 }
 
-TextArea.Loading = ({ label = "Loading..." }: LoadingProps) => (
+TextArea.Loading = ({ label = "Loading...", ...props }: LoadingProps) => (
     <div
         data-cy="textarea-loading"
         className="flex w-full flex-col text-center"
@@ -55,6 +47,7 @@ TextArea.Loading = ({ label = "Loading..." }: LoadingProps) => (
             className="duration-1000 animate-pulse disabled:bg-gray-300"
             disabled
             name="loading"
+            {...props}
         />
     </div>
 );
