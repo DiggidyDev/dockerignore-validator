@@ -3,7 +3,7 @@
 
 [![Vercel Preview Deployment Actions Status](https://github.com/DiggidyDev/dockerignore-validator/actions/workflows/vercel-preview.yaml/badge.svg)](https://github.com/DiggidyDev/dockerignore-validator/actions/workflows/vercel-preview.yaml)
 [![Cypress.io](https://img.shields.io/badge/Tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
-
+[![codecov](https://codecov.io/gh/DiggidyDev/dockerignore-validator/graph/badge.svg?token=ZNAKT51K0F)](https://codecov.io/gh/DiggidyDev/dockerignore-validator)
 
 
 
