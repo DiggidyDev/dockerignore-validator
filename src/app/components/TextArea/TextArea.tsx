@@ -20,12 +20,13 @@ export function TextArea({
     ...props
 }: TextAreaProps) {
     name = name ?? label.toLowerCase();
+    name = name.replaceAll(" ", "-");
 
     return (
         <div data-cy={testId} className="flex w-full flex-col text-center">
             <Label text={label} htmlFor={name} />
             <StyledTextArea
-                name={name}
+                id={name}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     setValue?.(e.target.value)
                 }
@@ -49,7 +50,7 @@ TextArea.Loading = ({ label = "Loading...", ...props }: LoadingProps) => (
         <StyledTextArea
             className="duration-1000 animate-pulse disabled:bg-gray-300"
             disabled
-            name="loading"
+            id="loading"
             {...props}
         />
     </div>
