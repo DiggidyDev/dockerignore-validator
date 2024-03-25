@@ -22,7 +22,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <main className="relative flex max-w-screen min-h-screen lg:py-0 flex-col items-center justify-between p-8">
                     {children}
-                    <div className="absolute flex items-center gap-4 bg-slate-700 2xl:px-6 p-4 rounded-t-xl italic bottom-0">
+                    <div className="absolute flex items-center shadow gap-4 dark:bg-slate-700 bg-white 2xl:px-6 p-4 rounded-t-xl italic bottom-0">
                         <span>
                             A{" "}
                             <Link
@@ -38,6 +38,7 @@ export default function RootLayout({
                         <Link
                             className="hover:text-[#ff3bac]"
                             href="https://github.com/DiggidyDev/dockerignore-validator"
+                            aria-label="GitHub Repository"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
