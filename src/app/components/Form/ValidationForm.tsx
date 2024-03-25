@@ -64,7 +64,7 @@ export function ValidationForm({ children, ...props }: ValidationFormProps) {
                 }}
             >
                 <form
-                    className="flex h-full lg:h-screen flex-col gap-8 items-center justify-evenly p-8 rounded-lg min-w-full"
+                    className="flex pb-[5%] h-full lg:h-screen flex-col gap-8 items-center justify-evenly p-8 rounded-lg min-w-full"
                     onSubmit={onSubmit}
                     {...props}
                 >

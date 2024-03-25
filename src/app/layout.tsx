@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import { BsGithub } from "react-icons/bs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +20,30 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <main className="flex max-w-screen min-h-screen lg:py-0 flex-col items-center justify-between p-8">
+                <main className="relative flex max-w-screen min-h-screen lg:py-0 flex-col items-center justify-between p-8">
                     {children}
+                    <div className="absolute flex items-center gap-4 bg-slate-700 2xl:px-6 p-4 rounded-t-xl italic bottom-0">
+                        <span>
+                            A{" "}
+                            <Link
+                                className="hover:text-[#ff3bac] underline"
+                                href="https://vw.codes"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                vw.codes
+                            </Link>{" "}
+                            project
+                        </span>
+                        <Link
+                            className="hover:text-[#ff3bac]"
+                            href="https://github.com/DiggidyDev/dockerignore-validator"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <BsGithub className="w-6 h-6 hover:text-[#ff3bac] cursor-pointer" />
+                        </Link>
+                    </div>
                 </main>
             </body>
         </html>
