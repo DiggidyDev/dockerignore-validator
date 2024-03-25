@@ -1,3 +1,4 @@
+import { JetBrains_Mono } from "next/font/google";
 import type { ChangeEvent, HTMLProps } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { Label } from "../Label/Label";
@@ -8,6 +9,8 @@ export interface TextAreaProps extends HTMLProps<HTMLTextAreaElement> {
 
     setValue?: Dispatch<SetStateAction<string>>;
 }
+
+const mono = JetBrains_Mono({ subsets: ["latin"] });
 
 export function TextArea({
     label,
@@ -60,7 +63,7 @@ function StyledTextArea({ className = "", ...props }: StyledTextAreaProps) {
     return (
         <textarea
             {...props}
-            className={`w-full h-full break-normal p-2 disabled:text-gray-300 disabled:overflow-hidden disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed dark:bg-slate-700 rounded-md drop-shadow-lg dark:shadow-2xl resize-none ${className}`}
+            className={`${mono.className} w-full h-full break-normal p-2 disabled:text-gray-300 disabled:overflow-hidden disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed dark:bg-slate-700 rounded-md drop-shadow-lg dark:shadow-2xl resize-none ${className}`}
         />
     );
 }
