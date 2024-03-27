@@ -39,9 +39,18 @@ func Index(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+    // Construct the patternmatcher before the loop, as to avoid unnecessary
+    // overhead of creating a new patternmatcher for each file
+    pm, err := patternmatcher.New(excludePatterns)
+    if err != nil {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprintln(w, `{"message": "Invalid exclude patterns"}`)
+        return
+    }
+
     // Check that each file matches the given dockerfile patterns
     for i := 0; i < len(files); i++ {
-        match, _ := patternmatcher.Matches(files[i], excludePatterns);
+        match, _ := pm.MatchesOrParentMatches(files[i]);
         matches = append(matches, match)
     }
 
