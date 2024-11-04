@@ -1,5 +1,5 @@
 import { getGithubRepo } from "@/app/utils/api";
-import { Options, Validation } from "@/app/utils/context";
+import { Validation } from "@/app/utils/context";
 import { ChangeEvent, useContext, useState } from "react";
 import { Button } from "../Button/Button";
 import { ActionInput } from "../Input/ActionInput";
@@ -10,7 +10,6 @@ export function BottomPanel() {
 
     const { isEvaluating, setDockerignore, setFiles, setIsFetchingRepo } =
         useContext(Validation);
-    const { showOptions, setShowOptions } = useContext(Options);
 
     const fetchRepo = async () => {
         setError(undefined);
@@ -60,15 +59,8 @@ export function BottomPanel() {
                 </Button>
             </ActionInput>
             <Button
-                data-cy="toggle-options"
-                className="bg-yellow-500 min-w-[9rem] enabled:hover:bg-yellow-600"
-                onClick={() => setShowOptions(!showOptions)}
-                type="button"
-            >
-                {showOptions ? "Hide" : "Show"} Options
-            </Button>
-            <Button
                 data-cy="validate-button"
+                className="drop-shadow-lg hover:drop-shadow-xl"
                 disabled={isEvaluating}
                 type="submit"
             >

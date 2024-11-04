@@ -9,14 +9,16 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "Dockerignore Validator",
     description:
-        "A simple tool to validate your .dockerignore config against a set of filepaths.",
+        "A simple tool to test your dockerignore config against a list of files.",
+    keywords:
+        "dockerignore, docker, ignore, validator, test, files, list, config, tool, utility, web, app, application, website, online, free, open-source, source, code, repository, github, vw, codes, vw.codes",
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{
+type RootLayoutProps = Readonly<{
     children: React.ReactNode;
-}>) {
+}>;
+
+export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="en">
             <body className={inter.className}>

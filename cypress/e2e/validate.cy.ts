@@ -23,7 +23,7 @@ describe("Homepage", () => {
             "not.exist"
         );
 
-        cy.get("[data-cy=toggle-options]").should("exist").and("be.enabled");
+        cy.get("[data-cy=toggle-options]").should("exist").and("be.visible");
 
         cy.get("[data-cy=validate-button]").should("exist").and("be.enabled");
 
@@ -89,7 +89,10 @@ describe("Homepage", () => {
         );
 
         cy.get("[data-cy=toggle-options]").click();
-        cy.get("[data-cy=toggle-options]").should("have.text", "Hide Options");
+        cy.get("[data-cy=toggle-options] > title").should(
+            "contain.text",
+            "Options"
+        );
 
         cy.get("[data-cy=options] > input[name=showIgnored]").uncheck();
         cy.get("[data-cy=result-output] > label").should(
